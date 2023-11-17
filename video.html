@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>YouTube Video Downloader</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">
+    <style>
+        body {
+            background: linear-gradient(to right, #b92b27, #1565C0);
+            color: #fff;
+            font-family: 'Arial', sans-serif;
+        }
+
+        .ui.container {
+            text-align: center;
+            margin-top: 50px;
+        }
+
+        img {
+            display: block;
+            margin: 0 auto;
+            margin-top: 20px;
+        }
+
+        h4 {
+            color: #fff;
+        }
+
+        .ui.segment {
+            margin-top: 20px;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            background-color: rgba(255, 255, 255, 0.9);
+        }
+
+        select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            box-sizing: border-box;
+        }
+
+        .fluid.ui.blue.button, .fluid.ui.purple.button {
+            width: 50%;
+            margin: 0 auto;
+        }
+
+        #show {
+            margin-top: 20px;
+        }
+    </style>
+    <script>
+        function show() {
+            var container = document.getElementById("show");
+            container.innerHTML = "<p>Your Video is downloading</p>";
+        }
+    </script>
+</head>
+<body>
+    <div class="ui container">
+        <div>
+            <img src="https://1.bp.blogspot.com/-qdRfUNOtjkM/XeI_00z9pzI/AAAAAAAAF4E/FeD2SvVFnKUjPAKQ_cNM6-D2ahjKb0HkQCLcBGAsYHQ/s1600/Youtube-Icon-square-2340x2340-2.png" alt="YouTube Video Downloader" width="20%" height="10%">
+            <h4 class="ui center aligned header">{{ url.title }}</h4><br>
+        </div>
+        <div class="ui segment">
+            <form action="{{ url_for('see_video') }}" method="POST" class="ui form">
+                <select name="itag">
+                    {% for i in url.streams %}
+                        <option value="{{ i.itag }}">{{ i.mime_type }} {{ i.resolution }}</option>
+                    {% endfor %}
+                </select><br><br>
+                <input type="submit" value="Download Video" onclick="show()" class="fluid ui blue button">
+            </form>
+            <form action="{{ url_for('see_audio') }}" method="POST" class="ui form">
+                <input type="submit" value="Download Audio" onclick="show()" class="fluid ui purple button">
+            </form>
+        </div>
+        <div id="show"></div>
+    </div>
+</body>
+</html>
